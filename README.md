@@ -1,9 +1,9 @@
-# TES 比赛实时 AI 监听系统
+# TES比赛失败自动播放《突然的陀螺》系统
 
 > 自动识别解说语义，第一时间感知胜负。
 
 <p align="center">
-  <img src="./assets/tes_logo.png" alt="TES AI Monitor Banner" width="200">
+  <img src="./tes_logo.png" alt="TES AI Monitor Banner" width="200">
 </p>
 
 <p align="center">
@@ -18,25 +18,18 @@
 
 ## 项目简介
 
-看 TES 比赛时，你是否也经历过：
-- 手动盯着屏幕，生怕错过关键局势
-- 传统关键词检测听不懂"寄了""被干碎了"等黑话
-- 想第一时间知道结果，却被信息延迟折磨
-
-这个项目用 **AI 语义理解** 替代机械关键词匹配，实时监听比赛解说，自动判断胜负，并在失利时播放你预设的"安慰视频"。
-
----
+根据解说的解说词，在检测到TES战队要失败后，自动打开《突然的陀螺》
 
 ## 核心特性
 
-| 特性 | 说明 |
-|------|------|
+| 特性                   | 说明                                           |
+| ---------------------- | ---------------------------------------------- |
 | **实时音频采集** | 通过 pyaudiowpatch 捕获 Windows 扬声器回环音频 |
-| **AI 人声检测** | Silero VAD 智能过滤 BGM、环境噪音 |
-| **本地语音识别** | Whisper medium 模型，RTX 4060 CUDA 加速 |
-| **语义理解** | DeepSeek API 理解自然语言、黑话、反讽 |
-| **状态机跟踪** | 维护比赛完整状态流转，避免单句误判 |
-| **置信度复核** | 低置信度自动触发外部裁判交叉验证 |
+| **AI 人声检测**  | Silero VAD 智能过滤 BGM、环境噪音              |
+| **本地语音识别** | Whisper medium 模型，RTX 4060 CUDA 加速        |
+| **语义理解**     | DeepSeek API 理解自然语言、黑话、反讽          |
+| **状态机跟踪**   | 维护比赛完整状态流转，避免单句误判             |
+| **置信度复核**   | 低置信度自动触发外部裁判交叉验证               |
 
 ---
 
@@ -120,9 +113,8 @@ python main_tes.py
 ├── main_tes.py           # 主程序入口
 ├── config.example.py     # 配置模板
 ├── .gitignore            # Git 忽略规则
-├── assets/               # 图片资源目录
-│   ├── tes_logo.png
-│   └── 视频封面.png
+├── tes_logo.png          # 项目 Logo
+├── 视频封面.png           # B 站 Demo 视频封面
 └── README.md             # 本文件
 ```
 
@@ -130,25 +122,25 @@ python main_tes.py
 
 ## 实时性优化
 
-| 优化点 | 效果 |
-|--------|------|
-| 录音 chunk 1024 帧 | 采集延迟约 21ms |
-| VAD 缓冲 512 样本 | 避免 "Input audio chunk is too short" 错误 |
-| torchaudio 专业重采样 | 避免混叠失真，保护语音特征 |
-| RTX 4060 CUDA 加速 | Whisper 推理压缩至 200ms 以内 |
-| 异步 I/O 流水线 | 采集、推理、回传并行，消除阻塞 |
+| 优化点                | 效果                                       |
+| --------------------- | ------------------------------------------ |
+| 录音 chunk 1024 帧    | 采集延迟约 21ms                            |
+| VAD 缓冲 512 样本     | 避免 "Input audio chunk is too short" 错误 |
+| torchaudio 专业重采样 | 避免混叠失真，保护语音特征                 |
+| RTX 4060 CUDA 加速    | Whisper 推理压缩至 200ms 以内              |
+| 异步 I/O 流水线       | 采集、推理、回传并行，消除阻塞             |
 
 ---
 
 ## 踩坑记录
 
-| 问题 | 原因 | 解决方案 |
-|------|------|----------|
-| torch 导入报 DLL 错误 | Anaconda Python VC++ 运行时版本不匹配 | 换用独立 Python 3.12 |
-| Silero VAD 报 chunk too short | 重采样后样本数不足 512 | 录音 chunk 改为 1536，后优化为 1024 + 缓冲 |
-| Whisper 跑得慢 | 默认使用 CPU | 设置 `device="auto"` 启用 CUDA |
-| 检测到失败后连续打开多个网页 | 多线程重复触发 | 主线程加 `game_ended` 互斥标志 |
-| PyCharm 检测不到解说 | 解释器选错导致 Silero 加载失败 | 切换为 `venv_new` 解释器 |
+| 问题                          | 原因                                  | 解决方案                                   |
+| ----------------------------- | ------------------------------------- | ------------------------------------------ |
+| torch 导入报 DLL 错误         | Anaconda Python VC++ 运行时版本不匹配 | 换用独立 Python 3.12                       |
+| Silero VAD 报 chunk too short | 重采样后样本数不足 512                | 录音 chunk 改为 1536，后优化为 1024 + 缓冲 |
+| Whisper 跑得慢                | 默认使用 CPU                          | 设置 `device="auto"` 启用 CUDA           |
+| 检测到失败后连续打开多个网页  | 多线程重复触发                        | 主线程加 `game_ended` 互斥标志           |
+| PyCharm 检测不到解说          | 解释器选错导致 Silero 加载失败        | 切换为 `venv_new` 解释器                 |
 
 ---
 
@@ -156,7 +148,7 @@ python main_tes.py
 
 <p align="center">
   <a href="https://www.bilibili.com/video/BV1QdMF6VEYh/" target="_blank">
-    <img src="./assets/视频封面.png" alt="Demo Video" width="640">
+    <img src="./视频封面.png" alt="Demo Video" width="640">
   </a>
   <br>
   <b>▶ 点击封面跳转到 B 站观看演示视频</b>
