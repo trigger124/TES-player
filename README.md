@@ -1,4 +1,4 @@
-# TES 比赛失利自动打开《突然的陀螺》系统
+# TES 比赛实时 AI 监听系统
 
 > 自动识别解说语义，第一时间感知胜负。
 
@@ -75,6 +75,9 @@ venv\Scripts\activate
 # 3. 安装 PyTorch (CUDA 12.6)
 pip install torch==2.12.1+cu126 torchaudio==2.11.0+cu126 --index-url https://download.pytorch.org/whl/cu126
 
+# 如果官方下载慢，可以使用清华镜像，或从网盘下载本地 wheel 安装
+# 详细方法见 SETUP.md
+
 # 4. 安装其他依赖
 pip install openai-whisper silero-vad pyaudiowpatch openai numpy==1.26.4
 ```
@@ -118,7 +121,8 @@ python main_tes.py
 ├── config.example.py     # 配置模板
 ├── .gitignore            # Git 忽略规则
 ├── assets/               # 图片资源目录
-│   └── tes_logo.png
+│   ├── tes_logo.png
+│   └── 视频封面.png
 └── README.md             # 本文件
 ```
 
@@ -152,7 +156,7 @@ python main_tes.py
 
 <p align="center">
   <a href="https://www.bilibili.com/video/BV1QdMF6VEYh/" target="_blank">
-    <img src="./assets/tes_logo.png" alt="Demo Video" width="200">
+    <img src="./assets/视频封面.png" alt="Demo Video" width="640">
   </a>
   <br>
   <b>▶ 点击封面跳转到 B 站观看演示视频</b>
