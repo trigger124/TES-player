@@ -45,7 +45,7 @@
 
 ---
 
-## 快速开始
+## 快速开始（直接看使用说明）
 
 ### 环境要求
 
@@ -57,7 +57,7 @@
 ### 安装依赖
 
 ```bash
-# 1. 克隆仓库
+# 1. 下载原名
 git clone https://github.com/你的用户名/tes-ai-monitor.git
 cd tes-ai-monitor
 
